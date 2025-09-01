@@ -55,20 +55,41 @@ public class ClienteService {
         }
     }
 
-    public void remover(Long id) throws ServiceException {
+    /**
+     * Inativa um cliente pelo ID.
+     * 
+     * @param id ID do cliente a ser inativado
+     * @throws ServiceException em caso de erro na operação
+     */
+    public void inativarCliente(Long id) throws ServiceException {
         try {
-            if (id == null) {
-                throw new ServiceException("ID do cliente é obrigatório.");
-            }
-            
             Cliente cliente = clienteDAO.findById(id);
             if (cliente == null) {
                 throw new ServiceException("Cliente não encontrado.");
             }
             
-            clienteDAO.delete(id);
+            clienteDAO.deactivate(id);
         } catch (DAOException e) {
-            throw new ServiceException("Erro ao remover cliente: " + e.getMessage(), e);
+            throw new ServiceException("Erro ao inativar cliente: " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Ativa um cliente pelo ID.
+     * 
+     * @param id ID do cliente a ser ativado
+     * @throws ServiceException em caso de erro na operação
+     */
+    public void ativarCliente(Long id) throws ServiceException {
+        try {
+            Cliente cliente = clienteDAO.findById(id);
+            if (cliente == null) {
+                throw new ServiceException("Cliente não encontrado.");
+            }
+            
+            clienteDAO.activate(id);
+        } catch (DAOException e) {
+            throw new ServiceException("Erro ao ativar cliente: " + e.getMessage(), e);
         }
     }
 

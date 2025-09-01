@@ -44,6 +44,9 @@ public class Pedido implements Serializable {
     @Column(name = "valor_total", nullable = false, precision = 10, scale = 2)
     private BigDecimal valorTotal;
 
+    @Column(name = "ativo", nullable = false)
+    private Boolean ativo = true;
+
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ItemPedido> itens;
 
@@ -107,6 +110,14 @@ public class Pedido implements Serializable {
 
     public void setItens(List<ItemPedido> itens) {
         this.itens = itens;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
     }
 
     // Métodos de negócio

@@ -99,20 +99,5 @@ public class CategoriaDAOImpl extends GenericDAOImpl<Categoria, Long> implements
         }
     }
 
-    @Override
-    public void delete(Long id) throws DAOException {
-        // Verifica se a categoria possui produtos antes de deletar
-        if (hasProducts(id)) {
-            throw new DAOException("Não é possível excluir a categoria pois existem produtos associados a ela.");
-        }
-        super.delete(id);
-    }
-
-    @Override
-    public void delete(Categoria entity) throws DAOException {
-        if (entity != null && entity.getId() != null) {
-            delete(entity.getId());
-        }
-    }
 }
 

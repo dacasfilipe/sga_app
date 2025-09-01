@@ -72,26 +72,42 @@ public class CategoriaService {
     }
 
     /**
-     * Remove uma categoria pelo ID.
+     * Inativa uma categoria pelo ID.
      * 
-     * @param id ID da categoria a ser removida
+     * @param id ID da categoria a ser inativada
      * @throws ServiceException em caso de erro na operação
      */
-    public void remover(Long id) throws ServiceException {
+    public void inativarCategoria(Long id) throws ServiceException {
         try {
-            if (id == null) {
-                throw new ServiceException("ID da categoria é obrigatório.");
-            }
-            
             // Verifica se a categoria existe
             Categoria categoria = categoriaDAO.findById(id);
             if (categoria == null) {
                 throw new ServiceException("Categoria não encontrada.");
             }
             
-            categoriaDAO.delete(id);
+            categoriaDAO.deactivate(id);
         } catch (DAOException e) {
-            throw new ServiceException("Erro ao remover categoria: " + e.getMessage(), e);
+            throw new ServiceException("Erro ao inativar categoria: " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Ativa uma categoria pelo ID.
+     * 
+     * @param id ID da categoria a ser ativada
+     * @throws ServiceException em caso de erro na operação
+     */
+    public void ativarCategoria(Long id) throws ServiceException {
+        try {
+            // Verifica se a categoria existe
+            Categoria categoria = categoriaDAO.findById(id);
+            if (categoria == null) {
+                throw new ServiceException("Categoria não encontrada.");
+            }
+            
+            categoriaDAO.activate(id);
+        } catch (DAOException e) {
+            throw new ServiceException("Erro ao ativar categoria: " + e.getMessage(), e);
         }
     }
 

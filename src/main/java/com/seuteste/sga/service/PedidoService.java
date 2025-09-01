@@ -110,26 +110,49 @@ public class PedidoService {
         }
     }
 
-    public void remover(Long id) throws ServiceException {
+    /**
+     * Inativa um pedido pelo ID (cancelamento lógico).
+     * 
+     * @param id ID do pedido a ser inativado
+     * @throws ServiceException em caso de erro na operação
+     */
+    public void inativarPedido(Long id) throws ServiceException {
         try {
-            if (id == null) {
-                throw new ServiceException("ID do pedido é obrigatório.");
-            }
-            
             Pedido pedido = pedidoDAO.findById(id);
             if (pedido == null) {
                 throw new ServiceException("Pedido não encontrado.");
             }
             
-            // Reverter estoque antes de excluir
+            // Reverter estoque antes de inativar
             atualizarEstoque(pedido, true);
             
-            pedidoDAO.delete(id);
+            pedidoDAO.deactivate(id);
         } catch (DAOException e) {
-            throw new ServiceException("Erro ao remover pedido: " + e.getMessage(), e);
+            throw new ServiceException("Erro ao inativar pedido: " + e.getMessage(), e);
         }
     }
 
+    /**
+     * Ativa um pedido pelo ID.
+     * 
+     * @param id ID do pedido a ser ativado
+     * @throws ServiceException em caso de erro na operação
+     */
+    public void ativarPedido(Long id) throws ServiceException {
+        try {
+            Pedido pedido = pedidoDAO.findById(id);
+            if (pedido == null) {
+                throw new ServiceException("Pedido não encontrado.");
+            }
+            
+            // Aplicar estoque novamente ao ativar
+            atualizarEstoque(pedido, false);
+            
+            pedidoDAO.activate(id);
+        } catch (DAOException e) {
+            throw new ServiceException("Erro ao ativar pedido: " + e.getMessage(), e);
+        }
+    }
     public Pedido buscarPorId(Long id) throws ServiceException {
         try {
             if (id == null) {

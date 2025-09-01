@@ -46,23 +46,43 @@ public class ProdutoService {
         }
     }
 
-    public void remover(Long id) throws ServiceException {
+    /**
+     * Inativa um produto pelo ID.
+     * 
+     * @param id ID do produto a ser inativado
+     * @throws ServiceException em caso de erro na operação
+     */
+    public void inativarProduto(Long id) throws ServiceException {
         try {
-            if (id == null) {
-                throw new ServiceException("ID do produto é obrigatório.");
-            }
-            
             Produto produto = produtoDAO.findById(id);
             if (produto == null) {
                 throw new ServiceException("Produto não encontrado.");
             }
             
-            produtoDAO.delete(id);
+            produtoDAO.deactivate(id);
         } catch (DAOException e) {
-            throw new ServiceException("Erro ao remover produto: " + e.getMessage(), e);
+            throw new ServiceException("Erro ao inativar produto: " + e.getMessage(), e);
         }
     }
 
+    /**
+     * Ativa um produto pelo ID.
+     * 
+     * @param id ID do produto a ser ativado
+     * @throws ServiceException em caso de erro na operação
+     */
+    public void ativarProduto(Long id) throws ServiceException {
+        try {
+            Produto produto = produtoDAO.findById(id);
+            if (produto == null) {
+                throw new ServiceException("Produto não encontrado.");
+            }
+            
+            produtoDAO.activate(id);
+        } catch (DAOException e) {
+            throw new ServiceException("Erro ao ativar produto: " + e.getMessage(), e);
+        }
+    }
     public Produto buscarPorId(Long id) throws ServiceException {
         try {
             if (id == null) {

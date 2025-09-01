@@ -129,8 +129,8 @@ public class ProdutoController implements Serializable {
     public void confirmarExclusao() {
         try {
             if (produtoSelecionado != null) {
-                produtoService.remover(produtoSelecionado.getId());
-                adicionarMensagemSucesso("Produto excluído com sucesso!");
+                produtoService.inativarProduto(produtoSelecionado.getId());
+                adicionarMensagemSucesso("Produto inativado com sucesso!");
                 carregarProdutos();
                 produtoSelecionado = null;
             }

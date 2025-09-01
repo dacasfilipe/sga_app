@@ -101,8 +101,8 @@ public class ClienteController implements Serializable {
     public void confirmarExclusao() {
         try {
             if (clienteSelecionado != null) {
-                clienteService.remover(clienteSelecionado.getId());
-                adicionarMensagemSucesso("Cliente excluído com sucesso!");
+                clienteService.inativarCliente(clienteSelecionado.getId());
+                adicionarMensagemSucesso("Cliente inativado com sucesso!");
                 carregarClientes();
                 clienteSelecionado = null;
             }

@@ -28,6 +28,9 @@ public class Categoria implements Serializable {
     @Column(name = "nome", nullable = false, unique = true)
     private String nome;
 
+    @Column(name = "ativo", nullable = false)
+    private Boolean ativo = true;
+
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Produto> produtos;
 
@@ -62,6 +65,14 @@ public class Categoria implements Serializable {
 
     public void setProdutos(List<Produto> produtos) {
         this.produtos = produtos;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
     }
 
     // Métodos equals, hashCode e toString

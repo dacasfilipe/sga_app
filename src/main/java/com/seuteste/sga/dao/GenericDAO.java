@@ -33,20 +33,20 @@ public interface GenericDAO<T, ID> {
     T update(T entity) throws DAOException;
 
     /**
-     * Remove uma entidade do banco de dados pelo ID.
+     * Ativa uma entidade (marca como ativo = true).
      * 
-     * @param id ID da entidade a ser removida
+     * @param id ID da entidade a ser ativada
      * @throws DAOException em caso de erro na operação
      */
-    void delete(ID id) throws DAOException;
+    void activate(ID id) throws DAOException;
 
     /**
-     * Remove uma entidade do banco de dados.
+     * Inativa uma entidade (marca como ativo = false).
      * 
-     * @param entity Entidade a ser removida
+     * @param id ID da entidade a ser inativada
      * @throws DAOException em caso de erro na operação
      */
-    void delete(T entity) throws DAOException;
+    void deactivate(ID id) throws DAOException;
 
     /**
      * Busca uma entidade pelo ID.
@@ -64,6 +64,14 @@ public interface GenericDAO<T, ID> {
      * @throws DAOException em caso de erro na operação
      */
     List<T> findAll() throws DAOException;
+
+    /**
+     * Lista apenas as entidades ativas.
+     * 
+     * @return Lista de entidades ativas
+     * @throws DAOException em caso de erro na operação
+     */
+    List<T> findAllActive() throws DAOException;
 
     /**
      * Conta o número total de entidades.

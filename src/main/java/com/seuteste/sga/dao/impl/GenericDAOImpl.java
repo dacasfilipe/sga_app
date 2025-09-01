@@ -67,36 +67,52 @@ public abstract class GenericDAOImpl<T, ID> implements GenericDAO<T, ID> {
     }
 
     @Override
-    public void delete(ID id) throws DAOException {
+    public void activate(ID id) throws DAOException {
         EntityManager em = null;
         try {
             em = JPAUtil.getEntityManager();
             em.getTransaction().begin();
             T entity = em.find(entityClass, id);
             if (entity != null) {
-                em.remove(entity);
+                // Usar reflexão para definir o campo 'ativo' como true
+                try {
+                    java.lang.reflect.Method setAtivo = entity.getClass().getMethod("setAtivo", Boolean.class);
+                    setAtivo.invoke(entity, true);
+                    em.merge(entity);
+                } catch (Exception reflectionEx) {
+                    throw new DAOException("Entidade não possui campo 'ativo': " + reflectionEx.getMessage(), reflectionEx);
+                }
             }
             em.getTransaction().commit();
         } catch (Exception e) {
             JPAUtil.rollback(em);
-            throw new DAOException("Erro ao deletar entidade com ID " + id + ": " + e.getMessage(), e);
+            throw new DAOException("Erro ao ativar entidade com ID " + id + ": " + e.getMessage(), e);
         } finally {
             JPAUtil.closeEntityManager(em);
         }
     }
 
     @Override
-    public void delete(T entity) throws DAOException {
+    public void deactivate(ID id) throws DAOException {
         EntityManager em = null;
         try {
             em = JPAUtil.getEntityManager();
             em.getTransaction().begin();
-            T managedEntity = em.merge(entity);
-            em.remove(managedEntity);
+            T entity = em.find(entityClass, id);
+            if (entity != null) {
+                // Usar reflexão para definir o campo 'ativo' como false
+                try {
+                    java.lang.reflect.Method setAtivo = entity.getClass().getMethod("setAtivo", Boolean.class);
+                    setAtivo.invoke(entity, false);
+                    em.merge(entity);
+                } catch (Exception reflectionEx) {
+                    throw new DAOException("Entidade não possui campo 'ativo': " + reflectionEx.getMessage(), reflectionEx);
+                }
+            }
             em.getTransaction().commit();
         } catch (Exception e) {
             JPAUtil.rollback(em);
-            throw new DAOException("Erro ao deletar entidade: " + e.getMessage(), e);
+            throw new DAOException("Erro ao inativar entidade com ID " + id + ": " + e.getMessage(), e);
         } finally {
             JPAUtil.closeEntityManager(em);
         }
@@ -125,6 +141,21 @@ public abstract class GenericDAOImpl<T, ID> implements GenericDAO<T, ID> {
             return query.getResultList();
         } catch (Exception e) {
             throw new DAOException("Erro ao listar todas as entidades: " + e.getMessage(), e);
+        } finally {
+            JPAUtil.closeEntityManager(em);
+        }
+    }
+
+    @Override
+    public List<T> findAllActive() throws DAOException {
+        EntityManager em = null;
+        try {
+            em = JPAUtil.getEntityManager();
+            String jpql = "SELECT e FROM " + entityClass.getSimpleName() + " e WHERE e.ativo = true";
+            TypedQuery<T> query = em.createQuery(jpql, entityClass);
+            return query.getResultList();
+        } catch (Exception e) {
+            throw new DAOException("Erro ao listar entidades ativas: " + e.getMessage(), e);
         } finally {
             JPAUtil.closeEntityManager(em);
         }

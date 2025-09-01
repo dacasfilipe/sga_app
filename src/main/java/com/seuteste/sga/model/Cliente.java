@@ -47,6 +47,9 @@ public class Cliente implements Serializable {
     @Column(name = "data_cadastro", nullable = false)
     private LocalDate dataCadastro;
 
+    @Column(name = "ativo", nullable = false)
+    private Boolean ativo = true;
+
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Pedido> pedidos;
 
@@ -118,6 +121,14 @@ public class Cliente implements Serializable {
 
     public void setPedidos(List<Pedido> pedidos) {
         this.pedidos = pedidos;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
     }
 
     // Métodos equals, hashCode e toString

@@ -122,8 +122,8 @@ public class CategoriaController implements Serializable {
     public void confirmarExclusao() {
         try {
             if (categoriaSelecionada != null) {
-                categoriaService.remover(categoriaSelecionada.getId());
-                adicionarMensagemSucesso("Categoria excluída com sucesso!");
+                categoriaService.inativarCategoria(categoriaSelecionada.getId());
+                adicionarMensagemSucesso("Categoria inativada com sucesso!");
                 carregarCategorias();
                 categoriaSelecionada = null;
             }

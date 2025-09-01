@@ -51,6 +51,9 @@ public class Produto implements Serializable {
     @Column(name = "data_cadastro", nullable = false)
     private LocalDate dataCadastro;
 
+    @Column(name = "ativo", nullable = false)
+    private Boolean ativo = true;
+
     // Construtores
     public Produto() {
         this.dataCadastro = LocalDate.now();
@@ -121,6 +124,14 @@ public class Produto implements Serializable {
 
     public void setDataCadastro(LocalDate dataCadastro) {
         this.dataCadastro = dataCadastro;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
     }
 
     // Métodos de negócio

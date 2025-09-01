@@ -263,8 +263,8 @@ public class PedidoController implements Serializable {
     public void confirmarExclusao() {
         try {
             if (pedidoSelecionado != null) {
-                pedidoService.remover(pedidoSelecionado.getId());
-                adicionarMensagemSucesso("Pedido excluído com sucesso!");
+                pedidoService.inativarPedido(pedidoSelecionado.getId());
+                adicionarMensagemSucesso("Pedido inativado com sucesso!");
                 carregarPedidos();
                 carregarProdutos(); // Recarregar para atualizar estoque
                 pedidoSelecionado = null;

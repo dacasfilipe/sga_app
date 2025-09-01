@@ -64,6 +64,9 @@ public class Usuario implements Serializable {
     @Column(name = "perfil", nullable = false)
     private Perfil perfil;
 
+    @Column(name = "ativo", nullable = false)
+    private Boolean ativo = true;
+
     // Construtores
     public Usuario() {
         this.dataCadastro = LocalDate.now();
@@ -129,6 +132,14 @@ public class Usuario implements Serializable {
 
     public void setPerfil(Perfil perfil) {
         this.perfil = perfil;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
     }
 
     // Métodos de negócio
