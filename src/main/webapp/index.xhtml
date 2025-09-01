@@ -12,6 +12,9 @@
 </h:head>
 
 <h:body>
+    <!-- Verificação de autenticação -->
+    <f:event type="preRenderView" listener="#{indexController.init}"/>
+    
     <div class="layout-wrapper">
         <!-- Header -->
         <div class="layout-topbar">

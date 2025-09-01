@@ -16,7 +16,7 @@ import java.util.List;
  * @author SGA Team
  * @version 1.0
  */
-@WebFilter(filterName = "AutenticacaoFilter", urlPatterns = {"*.xhtml"})
+// @WebFilter(filterName = "AutenticacaoFilter", urlPatterns = {"*.xhtml"}) // Desabilitado - usando AuthenticationFilter
 public class AutenticacaoFilter implements Filter {
 
     /**

@@ -66,23 +66,26 @@ public class LoginController implements Serializable {
             carregandoLogin = true;
             mensagemErro = null;
 
-            LOGGER.info("Tentativa de login para email: " + email);
+            // Validar e limpar campos
+            String emailLimpo = (email != null) ? email.trim().toLowerCase() : "";
+            String senhaLimpa = (senha != null) ? senha.trim() : "";
 
-            // Validar campos
-            if (email == null || email.trim().isEmpty()) {
+            LOGGER.info("Tentativa de login para email: " + emailLimpo);
+
+            if (emailLimpo.isEmpty()) {
                 mensagemErro = "Email é obrigatório.";
                 adicionarMensagemErro(mensagemErro);
                 return;
             }
 
-            if (senha == null || senha.trim().isEmpty()) {
+            if (senhaLimpa.isEmpty()) {
                 mensagemErro = "Senha é obrigatória.";
                 adicionarMensagemErro(mensagemErro);
                 return;
             }
 
             // Tentar autenticar
-            Usuario usuario = autenticacaoService.autenticar(email.trim(), senha);
+            Usuario usuario = autenticacaoService.autenticar(emailLimpo, senhaLimpa);
 
             if (usuario != null) {
                 // Login bem-sucedido
@@ -100,7 +103,7 @@ public class LoginController implements Serializable {
                 mensagemErro = "Email ou senha incorretos.";
                 adicionarMensagemErro(mensagemErro);
                 
-                LOGGER.warning("Tentativa de login falhada para email: " + email);
+                LOGGER.warning("Tentativa de login falhada para email: " + emailLimpo);
             }
 
         } catch (ServiceException e) {

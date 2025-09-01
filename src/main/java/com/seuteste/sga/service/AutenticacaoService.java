@@ -46,23 +46,38 @@ public class AutenticacaoService {
                 throw new ServiceException("Senha é obrigatória para autenticação.");
             }
 
+            // Limpar parâmetros
+            String emailLimpo = email.trim().toLowerCase();
+            String senhaLimpa = senha.trim();
+
             // Buscar usuário por email
-            Usuario usuario = usuarioDAO.findByEmail(email.trim());
+            Usuario usuario = usuarioDAO.findByEmail(emailLimpo);
             
             if (usuario == null) {
-                LOGGER.warning("Usuário não encontrado para email: " + email);
+                LOGGER.warning("Usuário não encontrado para email: " + emailLimpo);
                 return null; // Usuário não existe
             }
 
-            // Verificar senha
-            boolean senhaCorreta = CriptografiaUtil.verificarSenha(senha, usuario.getSenha());
+            // Verificar se o hash no banco é válido
+            if (!CriptografiaUtil.isHashValido(usuario.getSenha())) {
+                LOGGER.severe("Hash inválido no banco para usuário: " + emailLimpo);
+                // Tentar comparação simples como fallback (APENAS para migração)
+                if (senhaLimpa.equals(usuario.getSenha())) {
+                    LOGGER.warning("Senha encontrada em texto plano - RECRIAR HASH!");
+                    return usuario;
+                }
+                return null;
+            }
+
+            // Verificar senha com BCrypt
+            boolean senhaCorreta = CriptografiaUtil.verificarSenha(senhaLimpa, usuario.getSenha());
             
             if (senhaCorreta) {
                 LOGGER.info("Autenticação bem-sucedida para usuário: " + usuario.getNome());
                 return usuario;
             } else {
-                LOGGER.warning("Senha incorreta para email: " + email);
-                return null; // Senha incorreta
+                LOGGER.warning("Senha incorreta para email: " + emailLimpo);
+                return null;
             }
 
         } catch (DAOException e) {

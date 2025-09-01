@@ -1,0 +1,77 @@
+🚀 COMO EXECUTAR O SISTEMA SGA
+
+═══════════════════════════════════════════
+
+📦 ARQUIVO PRONTO: target\sga.war (27.6 MB)
+
+═══════════════════════════════════════════
+
+🔧 OPÇÕES PARA EXECUTAR:
+
+1️⃣ COM XAMPP + TOMCAT:
+   • Instalar XAMPP
+   • Copiar sga.war para C:\xampp\tomcat\webapps\
+   • Iniciar Tomcat no XAMPP
+   • Acessar: http://localhost:8080/sga/
+
+2️⃣ COM TOMCAT STANDALONE:
+   • Baixar Apache Tomcat 9
+   • Copiar sga.war para [TOMCAT]/webapps/
+   • Executar [TOMCAT]/bin/startup.bat
+   • Acessar: http://localhost:8080/sga/
+
+3️⃣ COM SERVIDOR APPLICATION (GlassFish/WildFly):
+   • Deploy do arquivo WAR
+   • Configurar datasource PostgreSQL
+   • Acessar na porta configurada
+
+═══════════════════════════════════════════
+
+🧪 TELA DE LOGIN:
+
+URL: http://localhost:8080/sga/login.xhtml
+
+👨‍💼 ADMIN (Botão Verde):
+Email: admin@sga.com
+Senha: 123456
+Acesso: TODAS as áreas
+
+👨‍🔧 OPERADOR (Botão Azul):  
+Email: operador@sga.com
+Senha: operador123
+Acesso: Produtos e Clientes apenas
+
+═══════════════════════════════════════════
+
+🎯 FUNCIONALIDADES IMPLEMENTADAS:
+
+✅ Interface de login com botões de teste
+✅ Autenticação BCrypt segura
+✅ Controle de acesso por perfil
+✅ Menu dinâmico baseado em permissões
+✅ Rotas protegidas automaticamente
+✅ Dashboard personalizado
+✅ Template responsivo moderno
+
+═══════════════════════════════════════════
+
+🗄️ BANCO DE DADOS:
+
+O sistema está configurado para PostgreSQL AWS RDS.
+Para teste local, você pode:
+
+• Usar o banco AWS (se acessível)
+• Ou configurar MySQL/PostgreSQL local
+• Os usuários de teste precisam ser criados no banco
+
+═══════════════════════════════════════════
+
+🚀 PRÓXIMOS PASSOS:
+
+1. Instalar XAMPP
+2. Configurar Tomcat 
+3. Deploy do WAR
+4. Criar usuários no banco
+5. Testar o sistema!
+
+═══════════════════════════════════════════

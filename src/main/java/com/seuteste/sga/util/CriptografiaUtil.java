@@ -56,11 +56,17 @@ public class CriptografiaUtil {
         }
         
         try {
-            BCrypt.Result result = BCrypt.verifyer().verify(senhaPlana.toCharArray(), hashArmazenado);
+            // Trim dos parâmetros para evitar espaços em branco
+            String senhaLimpa = senhaPlana.trim();
+            String hashLimpo = hashArmazenado.trim();
+            
+            BCrypt.Result result = BCrypt.verifyer().verify(senhaLimpa.toCharArray(), hashLimpo);
             return result.verified;
+            
         } catch (Exception e) {
             // Log do erro (em produção, usar um logger apropriado)
             System.err.println("Erro ao verificar senha: " + e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }
@@ -126,6 +132,19 @@ public class CriptografiaUtil {
         boolean temEspecial = senha.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*");
         
         return temMinuscula && temMaiuscula && temNumero && temEspecial;
+    }
+
+    /**
+     * Método utilitário para testar hash de senha (use apenas para debug).
+     * 
+     * @param senha Senha em texto plano
+     * @return Hash da senha
+     */
+    public static String testarHash(String senha) {
+        if (senha == null || senha.trim().isEmpty()) {
+            return "SENHA_VAZIA";
+        }
+        return criptografarSenha(senha.trim());
     }
 }
 
