@@ -9,11 +9,13 @@ import java.io.IOException;
 public class TestServer {
     public static void main(String[] args) {
         System.out.println("=== Sistema de Gerenciamento de Armazém ===");
-        System.out.println("WAR file compilado com sucesso!");
-        System.out.println("Para executar:");
-        System.out.println("1. Deploy do arquivo WAR em servidor Tomcat/GlassFish");
-        System.out.println("2. Ou executar com servidor embarcado");
+        System.out.println("Para executar a aplicação, use um dos comandos:");
         System.out.println("===============================================");
+        
+        System.out.println("\n🚀 COMANDOS PARA EXECUTAR:");
+        System.out.println("mvn clean compile");
+        System.out.println("mvn tomcat7:run");
+        System.out.println("\n📍 URL da aplicação: http://localhost:8080/sga");
         
         System.out.println("\n✅ FUNCIONALIDADES IMPLEMENTADAS:");
         System.out.println("🔐 Sistema de autenticação com BCrypt");
@@ -28,10 +30,17 @@ public class TestServer {
         System.out.println("🔧 ADMIN: Produtos ✅ | Clientes ✅ | Categorias ✅ | Pedidos ✅");
         
         System.out.println("\n🧪 CONTAS DE TESTE:");
-        System.out.println("📧 admin@sga.com / 123456 (Administrador)");
-        System.out.println("📧 operador@sga.com / operador123 (Operador)");
+        System.out.println("📧 admin@sga.com / senha: 123456 (Administrador)");
+        System.out.println("📧 operador@sga.com / senha: operador123 (Operador)");
         
-        System.out.println("\n🌐 Deploy pronto para AWS Elastic Beanstalk");
-        System.out.println("💾 WAR: " + System.getProperty("user.dir") + "\\target\\sga.war");
+        System.out.println("\n📦 OUTRAS OPÇÕES:");
+        System.out.println("• mvn clean package → Gera WAR em target/sga.war");
+        System.out.println("• Deploy manual em Tomcat/GlassFish");
+        System.out.println("🌐 Deploy pronto para AWS Elastic Beanstalk");
+        
+        System.out.println("\n⚠️  IMPORTANTE:");
+        System.out.println("1. Certifique-se que o banco H2 está configurado");
+        System.out.println("2. Execute na pasta raiz do projeto (onde está pom.xml)");
+        System.out.println("3. Java 8+ e Maven devem estar instalados");
     }
 }

@@ -30,6 +30,7 @@ com\seuteste\sga\dao\impl\UsuarioDAOImpl.class
 com\seuteste\sga\config\JsfConfig.class
 com\seuteste\sga\util\ConfigUtil.class
 com\seuteste\sga\service\ClienteService.class
+com\seuteste\sga\controller\IndexController.class
 com\seuteste\sga\dao\GenericDAO.class
 com\seuteste\sga\util\CriarUsuariosTeste.class
 com\seuteste\sga\util\SessaoUtil.class
